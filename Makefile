@@ -7,22 +7,22 @@ LIB_DIR := ./lib
 INCLUDE_DIRS := ./include
 LIB_DIRS :=
 
-SRC_FILES := $(shell find $(SRC_DIR) -name *.cpp)
-OBJ_FILES := $(SRC_FILES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
+SRC_FILES := $(shell find $(SRC_DIR) -name *.c)
+OBJ_FILES := $(SRC_FILES:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
 INCLUDE_FLAGS := $(addprefix -I,$(INCLUDE_DIRS))
 LIB_FLAGS := $(addprefix -L,$(LIB_DIRS))
 
-CPPFLAGS := $(INCLUDE_FLAGS) -std=c++11
+CFLAGS := $(INCLUDE_FLAGS) -std=gnu99
 LDFLAGS := $(LIB_FLAGS)
-CXX := g++
+COMPILER := clang
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJ_FILES)
-	@$(CXX) $(OBJ_FILES) -o $@
+	@$(COMPILER) $(OBJ_FILES) -o $@
 	@./$(BUILD_DIR)/$(TARGET_EXEC)
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@$(CXX) $(CPPFLAGS) -c $< -o $@
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@$(COMPILER) $(CFLAGS) -c $< -o $@
 
 .PHONY = build
 build: $(OBJ_FILES)

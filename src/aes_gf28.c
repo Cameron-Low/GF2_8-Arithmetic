@@ -1,5 +1,4 @@
 #include "aes_gf28.h"
-#include <iostream>
 
 void print_element(aes_gf28_t a) {
     bool first = true;
@@ -7,21 +6,21 @@ void print_element(aes_gf28_t a) {
         if (((a >> i) & 1) == 1) {
             if (first) {
                 if (i == 0) {
-                    std::cout << "1";
+                    printf("1");
                 } else {
-                    std::cout << "x^" << i;
+                    printf("x^%d", i);
                 }
                 first = false;
             } else {
                 if (i == 0) {
-                    std::cout << " + 1";
+                    printf(" + 1");
                 } else {
-                    std::cout << " + x^" << i;
+                    printf(" + x^%d", i);
                 }
             }
         }
     }
-    std::cout << std::endl;
+    printf("\n");
 }
 
 aes_gf28_t add(aes_gf28_t a, aes_gf28_t b) {
